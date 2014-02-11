@@ -1,6 +1,6 @@
 /* TODO: 
- *  -players have copy of opponent board 
- *
+ * -check for sunk ship
+ * -check for all ships sunk (lost game)
  */
 #ifndef PLAYER_H
 #define PLAYER_H

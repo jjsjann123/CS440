@@ -1,5 +1,5 @@
 /* TODO:
- *
+ * -mark ship as hit
  */
 #ifndef SHIP_H
 #define SHIP_H
