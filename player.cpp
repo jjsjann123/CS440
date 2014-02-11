@@ -94,7 +94,7 @@ void Player::placeShip(Ship *ship) {
         while (!valid) {
             //orientation must be numbers only 0 or 1
             valid = true;
-            cout << "\tVertical orientation? (0 = false, 1 = true) -> ";
+            cout << "\tVertical orientation? (0: no, 1: yes) -> ";
             cin >> isVertical;
             if (!cin.good())  
                 valid = false;
@@ -146,7 +146,6 @@ Coords* Player::attack() {
     int boardSize = board->getBoardSize();
     unsigned int row=0, col=0; 
     bool valid = false;
-    cout << "PLAYER " << ID << " ATTACK: " << endl; 
 
     //Take input of attack coordinates from user
     while (!valid) {
