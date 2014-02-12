@@ -11,10 +11,10 @@ Player::Player(int id, int boardSize) {
     board = new Board(boardSize);
 
     //capital words are enums defined in ship.h
-    ships.push_back(Ship(CARRIER, '5'));
+    //ships.push_back(Ship(CARRIER, '5'));
     //ships.push_back(Ship(BATTLESHIP, '4'));
     //ships.push_back(Ship(DESTROYER, '3'));
-    //ships.push_back(Ship(PATROL, '2'));
+    ships.push_back(Ship(PATROL, '2'));
 }
 
 //Destructor destroys board
@@ -173,4 +173,32 @@ Coords* Player::attack() {
         }
     }
     return new Coords(row, col);
+}
+
+//returns true on hit
+bool Player::isAHit(Coords* coords) {
+    bool hit;
+    if (board->isAHit(coords)) {
+        hit = true;
+        //find ship that was hit and mark it
+        markShip(coords);
+        return true;
+    }
+    else {
+        hit = false;
+    }
+    return false;
+}
+
+//Searches through ships to find cell at coords and mark as hit
+void Player::markShip(Coords* coords) {
+   std::vector<Ship>::iterator ships_it;
+   std::vector<ShipData>::iterator data_it;
+   for (ships_it = ships.begin(); ships_it != ships.end(); ships_it++) {
+       //Find the ship that the coords match
+       if (ships_it->markAsHit(coords->row, coords->col)) {
+           return;
+       }
+   }
+
 }

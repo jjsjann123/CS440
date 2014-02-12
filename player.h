@@ -39,9 +39,12 @@ public:
     Coords* attack();
 
     //returns true on hit
-    bool isAHit(Coords* coords) {
-        return board->isAHit(coords);
-    }
+    bool isAHit(Coords* coords);
+
+    //finds ship with coords and marks it as hit
+    void markShip(Coords* coords);
+ 
+
 
 private:
     int ID;
