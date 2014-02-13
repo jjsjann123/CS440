@@ -1,7 +1,7 @@
 all: bs
 
 bs: bsTest.o player.o ship.o board.o
-	g++ -o bs bsTest.o player.o ship.o board.o
+	g++ -Wall -o bs bsTest.o player.o ship.o board.o
 bsTest.o: bsTest.cpp player.h ship.h board.h
 	g++ -c bsTest.cpp
 player.o: player.cpp player.h ship.h board.h
