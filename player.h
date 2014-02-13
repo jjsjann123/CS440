@@ -19,8 +19,8 @@ public:
     void displayBoard(); 
 
     //setters/getters
-    void setBoardValue(unsigned int row, unsigned int col, int val); 
-    int getBoardValue(unsigned int row, unsigned int col);
+    void setBoardValue(int row, int col, int val); 
+    char getBoardValue(int row, int col);
     int getID() { return ID; }
 
     //loops through each ship and calls placeShip on it

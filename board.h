@@ -16,20 +16,20 @@ struct Coords {
 class Board {
 public: 
     //Constructor: sizes the board and sets all positions to '-'
-    Board(unsigned int size);
+    Board(int size);
 
     //setters/getters
-    int getValue(unsigned int row, unsigned int col);
+    char getValue(int row, int col);
+    void setValue(int row, int col, char val);
     int getBoardSize() { return boardSize; }
-    void setValue(unsigned int row, unsigned int col, char val);
     void displayBoard();
 
     //Returns true if position contains a ship
-    bool isAHit(unsigned int row, unsigned int col);
+    bool isAHit(int row, int col);
     bool isAHit(Coords* coords);
 
     //Returns true if specified position is a valid placement on current board
-    bool isValidPosition(int length, bool isVertical, unsigned int row, unsigned int col);
+    bool isValidPosition(int length, bool isVertical, int row, int col);
 
     //Places the ship on the board by marking position with the ship's ID
     void markShipPosition(Ship *ship);

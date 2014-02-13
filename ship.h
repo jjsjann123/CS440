@@ -26,15 +26,15 @@ public:
     Ship(ShipType type, char id); 
 
     //setters/getters
-    int getSternRow()       { return sternRow; }
-    int getSternCol()       { return sternCol; }
+    int getSternRow()       { return sternRow; } //used by Board for placing ship
+    int getSternCol()       { return sternCol; } //used by Board for placing ship
     int getLength()         { return length; }
     bool isVertical()       { return vertical; }
     char getID()            { return ID; }
     bool isSunk()           { return sunk; }
     
     //Assigns each cell of the ship (ShipData vector) to a board cell and marks as not hit
-    void setShipData(bool isVertical, unsigned int sternRow, unsigned int sternCol);
+    void setShipData(bool isVertical, int sternRow, int sternCol);
 
     //Marks the ship as hit if it sits on row, col
     bool markAsHit(int row, int col); 

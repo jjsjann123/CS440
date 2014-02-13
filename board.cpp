@@ -6,24 +6,28 @@
 
 using namespace std;
 
-Board::Board(unsigned int size) {
+Board::Board(int size) {
+    if (size < 0) {
+        cout << "Error: board size must be positive -> " << size << endl;
+        exit(1);
+    }
     boardSize = size;
     board.resize(size, vector<char>(size, '-'));
 }
 
 //Get cell's value
-int Board::getValue(unsigned int row, unsigned int col) {
-    if (row > boardSize || col > boardSize) {
-        cout << "Error: Board::getValue out of boardSize range" << endl;
+char Board::getValue(int row, int col) {
+    if (row < 0 || col < 0 || row > boardSize || col > boardSize) {
+        cout << "Error: invalid Board::getValue coordinates -> " << row << ", " << col << endl;
         exit(1);
     }
     return board[row][col];
 }
 
 //Set cell's value
-void Board::setValue(unsigned int row, unsigned int col, char val) {
-    if (row > boardSize || col > boardSize) {
-        cout << "Error: Board::setValue out of boardSize range" << endl;
+void Board::setValue(int row, int col, char val) {
+    if (row < 0 || col < 0 || row > boardSize || col > boardSize) {
+        cout << "Error: invalid Board::setValue coordinates -> " << row << ", " << col << endl;
         exit(1);
     }
     board[row][col] = val;
@@ -49,7 +53,11 @@ void Board::displayBoard() {
 }
 
 //Returns true if there is a ship at the specified location
-bool Board::isAHit(unsigned int row, unsigned int col) {
+bool Board::isAHit(int row, int col) {
+    if (row < 0 || col < 0 || row > boardSize || col > boardSize) {
+        cout << "Error: invalid Board::isAHit coordinates -> " << row << ", " << col << endl;
+        exit(1);
+    }
     if (board[row][col] != '-') {
         setValue(row, col, 'X');
         return true;
@@ -66,7 +74,11 @@ bool Board::isAHit(Coords* coords) {
 }
 
 //Returns true if specified position is a valid placement on current board
-bool Board::isValidPosition(int length, bool isVertical, unsigned int row, unsigned int col) {
+bool Board::isValidPosition(int length, bool isVertical, int row, int col) {
+    if (row < 0 || col < 0 || row > boardSize || col > boardSize ){
+        cout << "Error: Board::isValidPosition invalid coordinates -> " << row << ", " << col << endl;
+        exit(1);
+    }
 
     if (isVertical) {
         //check that the ship fits on the board

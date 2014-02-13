@@ -28,11 +28,21 @@ void Player::displayBoard() {
     board->displayBoard();
 }
 
-void Player::setBoardValue(unsigned int row, unsigned int col, int val) {
+void Player::setBoardValue(int row, int col, int val) {
+    int boardSize = board->getBoardSize();
+    if (row < 0 || col < 0 || row > boardSize || col > boardSize) {
+        cout << "Error: invalid Player::setBoardValue coordinates -> " << row << ", " << col << endl;
+        exit(1);
+    }
     board->setValue(row, col, val);
 }
 
-int Player::getBoardValue(unsigned int row, unsigned int col) {
+char Player::getBoardValue(int row, int col) {
+    int boardSize = board->getBoardSize();
+    if (row < 0 || col < 0 || row > boardSize || col > boardSize) {
+        cout << "Error: invalid Player::getBoardValue coordinates -> " << row << ", " << col << endl;
+        exit(1);
+    }
     return board->getValue(row, col);
 }
 

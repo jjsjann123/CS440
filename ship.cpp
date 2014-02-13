@@ -17,7 +17,11 @@ Ship::Ship(ShipType type, char id) {
 
 
 //Assigns each cell of the ship (ShipData vector) to a board cell and marks as not hit
-void Ship::setShipData(bool isVertical, unsigned int row, unsigned int col) {
+void Ship::setShipData(bool isVertical, int row, int col) {
+    if (row < 0 || col < 0) {
+        cout << "Error: Ship::setShipData invalid coordinates -> " << row << ", " << col << endl;
+        exit(1);
+    }
     vertical = isVertical; 
     sternRow = row;
     sternCol = col;
