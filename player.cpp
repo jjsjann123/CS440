@@ -14,7 +14,7 @@ Player::Player(int id, int boardSize) {
     //ships.push_back(Ship(CARRIER, '5'));
     //ships.push_back(Ship(BATTLESHIP, '4'));
     //ships.push_back(Ship(DESTROYER, '3'));
-    ships.push_back(Ship(PATROL, '2'));
+    //ships.push_back(Ship(PATROL, '2'));
 }
 
 //Destructor destroys board

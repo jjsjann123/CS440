@@ -44,12 +44,13 @@ public:
     //finds ship with coords and marks it as hit
     void markShip(Coords* coords);
  
-
+protected:
+	std::vector<Ship> ships;
 
 private:
     int ID;
     Board *board; //* for dynamic allocation via constructor
-    std::vector<Ship> ships;
+    
 };
 
 #endif

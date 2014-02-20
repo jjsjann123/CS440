@@ -25,8 +25,8 @@ public:
     void displayBoard();
 
     //Returns true if position contains a ship
-    bool isAHit(int row, int col);
-    bool isAHit(Coords* coords);
+    virtual bool isAHit(int row, int col);
+    virtual bool isAHit(Coords* coords);
 
     //Returns true if specified position is a valid placement on current board
     bool isValidPosition(int length, bool isVertical, int row, int col);
