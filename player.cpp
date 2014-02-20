@@ -210,5 +210,4 @@ void Player::markShip(Coords* coords) {
            return;
        }
    }
-
 }

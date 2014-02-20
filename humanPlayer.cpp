@@ -8,13 +8,18 @@ void HumanPlayer::move(int direction)
 bool HumanPlayer::isAHit(Coords* coords)
 {
 	bool ret = _boardPanel->isAHit(coords);
-	Player::isAHit(coords);
+	//Player::isAHit(coords);
 	return ret;
 }
 
 osg::Group* HumanPlayer::getOSGRoot()
 {
 	return _boardPanel->getRoot();
+}
+
+void HumanPlayer::showShip(Ship &ship)
+{
+	_boardPanel->showShipPosition(ship.getLength(), ship.isVertical(), ship.getSternRow(), ship.getSternCol());
 }
 
 bool HumanPlayer::placeShip (Ship *ship)
@@ -36,4 +41,23 @@ void HumanPlayer::displayShip (Ship ship)
 int HumanPlayer::getBoardSize()
 {
 	return _boardPanel->getBoardSize();
+}
+
+int HumanPlayer::getCursorCol()
+{
+	return _boardPanel->getCursorCol();
+}
+
+int HumanPlayer::getCursorRow()
+{
+	return _boardPanel->getCursorRow();
+}
+
+char HumanPlayer::getBoardValue(int row, int col)
+{
+	int boardSize = _boardPanel->getBoardSize();
+    if (row < 0 || col < 0 || row > boardSize || col > boardSize) { 
+		return '*';
+	}
+	return _boardPanel->getValue(row, col);
 }

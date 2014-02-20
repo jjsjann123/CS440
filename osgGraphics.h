@@ -36,6 +36,10 @@ public:
 	bool getVisible() { return _visible; };
 	void setVisible(bool visible) { _visible = visible; };
 
+	int getCursorRow();
+	int getCursorCol();
+
+
 protected:
 	Coords _cursor;
 	// Here val indicates whether it's a HIT or MISS:

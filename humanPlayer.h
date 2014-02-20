@@ -12,6 +12,11 @@ public:
 	
 	// This direction use BoardPanel::MOVE_UP/DOWN/LEFT/RIGHT
 	void move(int direction);
+	int getCursorCol();
+	int getCursorRow();
+
+
+	char getBoardValue(int row, int col);
 
 	/****************************
 	 *
@@ -19,17 +24,22 @@ public:
 	 *
 	 *	void placeShip(Ship *ship);
 	 *
+	 *  is no longer used.
+	 *
 	 ****************************/
+
 	bool isAHit(Coords* coords);
 
 	osg::Group* getOSGRoot();
 
-	void placeShip(Ship *ship);
+	void showShip(Ship &ship);
+	bool placeShip(Ship *ship);
 
 	void displayShip(Ship ship);
 	int getBoardSize();
 	
 protected:
+	// Moved to parent class Player
 	BoardPanel* _boardPanel;
 };
 

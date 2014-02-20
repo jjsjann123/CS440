@@ -37,6 +37,9 @@ int main(int argc, char **argv) {
 	
 	viewer.setSceneData( root );
 	viewer.addEventHandler(myHandler);
+	viewer.setUpViewInWindow(0, 0, 640, 480);
+	viewer.realize();
+
 
 /*	player1.isAHit(loc1);
 	loc1->col = 3;

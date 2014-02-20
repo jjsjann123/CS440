@@ -18,21 +18,23 @@ GameStateMachine::~GameStateMachine()
 
 void GameStateMachine::keyboardInput(char key, GameStateMachine* obj)
 {
-		switch (obj->_state)
-		{
-		case INITIALIZE:
-			obj->initialize( key );
-			break;
-		case PLACESHIP:
-			obj->placeship( key );
-			break;
-		case ATTACK:
-			obj->attack( key );
-			break;
-		case GAMEOVER:
-			obj->gameover( key );
-			break;
-		}
+	
+	std::cout << "state: " << obj->_state << std::endl;
+	switch (obj->_state)
+	{
+	case INITIALIZE:
+		obj->initialize( key );
+		break;
+	case PLACESHIP:
+		obj->placeship( key );
+		break;
+	case ATTACK:
+		obj->attack( key );
+		break;
+	case GAMEOVER:
+		obj->gameover( key );
+		break;
+	}
 }
 
 void GameStateMachine::initialize(char key)
@@ -62,29 +64,82 @@ void GameStateMachine::placeship(char key)
 	switch(key)
 	{
 	case 'w':
+	case 'W':
 		std::cout << " w key pressed" << std::endl;
-		
+		if ( row < size -1 )
+		{
+			row += 1;
+			_shipList[_index].setShipData(vertical, row, col);
+			_player->showShip(_shipList[_index]);
+		}
 		break;
 	case 'a':
+	case 'A':
 		std::cout << " a key pressed" << std::endl;
-		
+		if ( col > 0 )
+		{
+			col -= 1;
+			_shipList[_index].setShipData(vertical, row, col);
+			_player->showShip(_shipList[_index]);
+		}
 		break;
 	case 's':
+	case 'S':
 		std::cout << " s key pressed" << std::endl;
-		
+		if ( row > 0 )
+		{
+			row -= 1;
+			_shipList[_index].setShipData(vertical, row, col);
+			_player->showShip(_shipList[_index]);
+		}
 		break;
 	case 'd':
+	case 'D':
 		std::cout << " d key pressed" << std::endl;
-		
+		if ( col < size -1 )
+		{
+			col += 1;
+			_shipList[_index].setShipData(vertical, row, col);
+			_player->showShip(_shipList[_index]);
+		}
+		break;
+		//rotate
+	case 'r':
+	case 'R':
+		std::cout << " d key pressed" << std::endl;
+		vertical = !vertical;
+		_shipList[_index].setShipData(vertical, row, col);
+		_player->showShip(_shipList[_index]);
+		break;
+	case 13:
+		std::cout << " enter pressed" << std::endl;
+		if (_player->placeShip(&_shipList[_index]))
+		{
+			// Finished deployment
+			// Entering Attack mode
+			if (_index >= _shipList.size()-1)
+			{
+				_state = ATTACK;
+				_index = 0;
+			}
+			else
+			{
+				_index++;
+			}
+		}
 		break;
 	default:
 		std::cout << key << std::endl;
+		std::cout << (int) key << std::endl;
 	} 
+
+	std::cout << "row: " << row << ", col: " << col << ", length: " << length << ", vertical?" << vertical << std::endl;
 
 }
 
 void GameStateMachine::attack(char key)
 {
+	std::cout << "entering attack" << std::endl;
 	switch(key)
 	{
 	case 'w':
@@ -103,9 +158,21 @@ void GameStateMachine::attack(char key)
 		std::cout << " d key pressed" << std::endl;
 		_player->move(BoardPanel::MOVE_RIGHT);
 		break;
+	case 13:
+		{
+			int row = _player->getCursorRow();
+			int col = _player->getCursorCol();
+			char val = _player->getBoardValue(row, col);
+			if ( val != 'X' && val != 'O' )
+			{
+				Coords coord(row, col);
+				_player->isAHit(&coord);
+			}
+			break;
+		}
 	default:
 		std::cout << key << std::endl;
-	} 
+	}
 }
 
 void GameStateMachine::gameover(char key)

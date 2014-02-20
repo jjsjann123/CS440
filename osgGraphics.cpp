@@ -8,6 +8,11 @@ BoardPanel::BoardPanel( int size ) : Board(size), _cursor(size/2, size/2)
 	ShapeDrawable *myShapeDrawable;
 	osg::Box *myBox;
 
+	_row = 0;
+	_col = 0;
+	_length = 0;
+	_isVertical = false;
+
 	_root = new osg::Group();
 
 	_geode = new osg::Geode();
@@ -47,40 +52,48 @@ void BoardPanel::setColor( Coords aimCoord, int val)
 	row = aimCoord.row;
 	col = aimCoord.col;
 
-	int pos = row * getBoardSize() + col;
-	
+	int size = getBoardSize();
 
-	switch (val)
+	if ( row >= size || col >= size || row < 0 || col < 0 )
 	{
-	case ATTACK_HIT:
-		_allies[pos]-> setColor ( osg::Vec4(1.0f, 0.3f, 0.3f, 1.0f) );
-		break;
-	case ATTACK_MISS:
-		_allies[pos]-> setColor ( osg::Vec4(0.3f, 1.0f, 0.3f, 1.0f) );
-		break;
-	case ATTACK_UNKNOW:
-		_allies[pos]-> setColor ( osg::Vec4(0.3f, 0.3f, 1.0f, 1.0f) );
-		break;
-	case SELECTING:
-		_allies[pos]-> setColor ( osg::Vec4(1.0f, 1.0f, 1.0f, 0.8f) );
-		break;
-	case SHIP_POSITION:
-		_allies[pos]-> setColor ( osg::Vec4(0.1f, 0.3f, 1.0f, 1.0f) );
-		break;
-	case SHIP_POSITION_UNCONFIRMED:
-		_allies[pos]-> setColor ( osg::Vec4(0.1f, 0.3f, 1.0f, 0.5f) );
-		break;
-	case SHIP_INVALID:
-		_allies[pos]-> setColor ( osg::Vec4(1.0f, 0.3f, 0.1f, 0.5f) );
-		break;
-	case SHIP_UNOCCUPIED:
-		_allies[pos]-> setColor ( osg::Vec4(0.1f, 0.1f, 0.1f, 0.1f) );
-		break;
-	case SHIP_HIT:
-		_allies[pos]-> setColor ( osg::Vec4(1.0f, 0.0f, 0.0f, 1.0f) );
-		break;
-	default:
-		break;
+		// This is out of range. 
+		// Should just left blank.
+	}
+	else
+	{
+		int pos = row * getBoardSize() + col;
+		switch (val)
+		{
+		case ATTACK_HIT:
+			_allies[pos]-> setColor ( osg::Vec4(1.0f, 0.3f, 0.3f, 1.0f) );
+			break;
+		case ATTACK_MISS:
+			_allies[pos]-> setColor ( osg::Vec4(0.3f, 1.0f, 0.3f, 1.0f) );
+			break;
+		case ATTACK_UNKNOW:
+			_allies[pos]-> setColor ( osg::Vec4(0.3f, 0.3f, 1.0f, 1.0f) );
+			break;
+		case SELECTING:
+			_allies[pos]-> setColor ( osg::Vec4(1.0f, 1.0f, 1.0f, 0.8f) );
+			break;
+		case SHIP_POSITION:
+			_allies[pos]-> setColor ( osg::Vec4(0.1f, 0.3f, 1.0f, 1.0f) );
+			break;
+		case SHIP_POSITION_UNCONFIRMED:
+			_allies[pos]-> setColor ( osg::Vec4(0.1f, 0.3f, 1.0f, 0.5f) );
+			break;
+		case SHIP_INVALID:
+			_allies[pos]-> setColor ( osg::Vec4(1.0f, 0.3f, 0.1f, 0.5f) );
+			break;
+		case SHIP_UNOCCUPIED:
+			_allies[pos]-> setColor ( osg::Vec4(0.1f, 0.1f, 0.1f, 0.1f) );
+			break;
+		case SHIP_HIT:
+			_allies[pos]-> setColor ( osg::Vec4(1.0f, 0.0f, 0.0f, 1.0f) );
+			break;
+		default:
+			break;
+		}
 	}
 }
 
@@ -235,7 +248,7 @@ void BoardPanel::setShipPositionColor(bool setFlag)
 	
 	//if the ship is vertically oriented...
 	if (_isVertical) {
-        for (int r = _row; r < (_row+_length); ++r) 
+        for (int r = _row; r < (_row+_length) && r < getBoardSize(); ++r) 
 		{
 			// if it's occupied. leave it unchanged
 			if (getValue(r, _col) == '-')
@@ -250,7 +263,7 @@ void BoardPanel::setShipPositionColor(bool setFlag)
     }
     //if the ship is horizontally oriented...
     else {
-        for (int c = _col; c < (_col+_length); ++c) 
+        for (int c = _col; c < (_col+_length) && c < getBoardSize(); ++c) 
 		{
             // if it's occupied. leave it unchanged
 			if (getValue(_row, c) == '-')
@@ -264,4 +277,14 @@ void BoardPanel::setShipPositionColor(bool setFlag)
         }
     }
 
+}
+
+int BoardPanel::getCursorRow()
+{
+	return _cursor.row;
+}
+
+int BoardPanel::getCursorCol()
+{
+	return _cursor.col;
 }
